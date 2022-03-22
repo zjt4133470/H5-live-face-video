@@ -1,0 +1,1038 @@
+* {
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    background: transparent;
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, "PingFang SC", Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100%;
+    -webkit-user-select: none;
+    -webkit-text-size-adjust: none;
+    user-select: none;
+    font: normal 14px/20px arial, helvetica, "Hiragino Sans GB", "Microsoft Yahei", "微软雅黑", sans-serif;
+    text-align: left;
+    max-width: 750px;
+    background: #F7F7F7;
+    margin: 0 auto;
+    color: #333C4F; /*文字主体色*/
+    font-weight: 400;
+    opacity: 1;
+}
+
+/*主题色*/
+.mim-bgColor {
+    background: #006AFF !important;
+}
+
+.mim-color {
+    color: #006AFF !important;
+}
+
+/*禁止滑动*/
+.mim-select-body-class {
+    overflow: hidden;
+}
+
+/*基础字体样式*/
+.mim-font-12 {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    opacity: 1;
+}
+
+.mim-fontBold-12 {
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 16px;
+    opacity: 1;
+}
+
+.mim-font-14 {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    opacity: 1;
+}
+
+.mim-fontBold-14 {
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 20px;
+    opacity: 1;
+}
+
+.mim-font-16 {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 22px;
+    opacity: 1;
+}
+
+.mim-fontBold-16 {
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 22px;
+    opacity: 1;
+}
+
+/*辅助色*/
+.mimBlue {
+    color: #006AFF !important;
+}
+
+.mimBgBlue {
+    background: #006AFF !important;
+}
+
+.mimRed {
+    color: #FF4444 !important;
+}
+
+.mimBgRed {
+    background: #FF4444 !important;
+}
+
+.mimYellow {
+    color: #FFD800 !important;
+}
+
+.mimBgYellow {
+    background: #FFD800 !important;
+}
+
+.mimGreen {
+    color: #00CC88 !important;
+}
+
+.mimBgGreen {
+    background: #00CC88 !important;
+}
+
+.mimOrange {
+    color: #FF8000 !important;
+}
+
+.mimBgOrange {
+    background: #FF8000 !important;
+}
+
+.mimMinor {
+    color: #8088A8 !important;
+}
+
+.mimGray {
+    color: #8088A8 !important;
+}
+
+/*未激活背色*/
+.mimBgMinor {
+    background: #E7EAF1 !important;
+}
+
+/*阴影*/
+.mim-shadow {
+    box-shadow: 0 2px 8px 0 rgba(2, 18, 105, 0.12);
+}
+
+/*按钮*/
+.btn80 {
+    width: 80px;
+    color: #ffffff;
+    text-align: center;
+    height: 24px;
+    line-height: 24px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.btnDisabled {
+    pointer-events: none;
+    cursor: default;
+    background: #E7EAF1 !important;
+    color: #8088A8 !important;
+}
+
+.mim-button {
+    height: 44px;
+    position: relative;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 44px;
+    color: #FFFFFF;
+}
+
+/*单选框&多选框*/
+.mim-radio, .mim-checkbox {
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    background: #FFFFFF;
+    border: solid 1px #B4B9CC;
+    position: relative;
+}
+
+.mim-checkbox {
+    border-radius: 2px;
+}
+
+.mim-radio:checked, .mim-checkbox:checked {
+    background-color: #006AFF !important;
+    border: solid 1px #006AFF !important;
+    text-align: center;
+}
+
+.mim-radio:checked:before, .mim-checkbox:checked:before, .mim-radio:checked:after, .mim-checkbox:checked:after {
+    content: '';
+    width: 0.4rem;
+    height: 0.2rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -0.2rem;
+    margin-top: -0.2rem;
+    background: transparent;
+    border: 1px solid #FFFFFF;
+    border-top: none;
+    border-right: none;
+    z-index: 2;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+
+/*图标*/
+.iconfont16 {
+    width: 16px;
+    height: 16px;
+}
+
+.iconfont20 {
+    width: 20px;
+    height: 20px;
+}
+
+.iconfont24 {
+    width: 24px;
+    height: 24px;
+}
+
+.iconfont40 {
+    width: 40px;
+    height: 40px;
+}
+
+/*段落公共样式*/
+p, ul, span {
+    margin: 0;
+    color: #333C4F;
+}
+
+/*列表公共样式*/
+ul, li {
+    list-style: none;
+}
+
+/*图片公共样式*/
+img {
+    width: 100%;
+    display: inline-block;
+    height: auto;
+}
+
+/*清除浮动*/
+.mimClear:after {
+    content: "";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.mimClear {
+    *zoom: 1; /*ie6清除浮动的方式 *号只有IE6-IE7执行，其他浏览器不执行*/
+}
+
+/*单行溢出文字省略*/
+.mim-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/*文字不折行*/
+.mim-nowrap {
+    white-space: nowrap;
+}
+
+/*多行文字溢出省略号*/
+.mim-multi-line {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+}
+
+/*去除标签默认样式*/
+input[type="button"], input[type="submit"], input[type="reset"], textarea, input, button, select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: 0;
+    outline: none;
+}
+
+/*input公共样式*/
+input {
+    background-color: #f5f6f7;
+    width: 100%;
+}
+
+::-webkit-input-placeholder {
+    color: #8088A8;
+}
+
+::-moz-placeholder {
+    color: #8088A8;
+}
+
+::-moz-placeholder {
+    color: #8088A8;
+}
+
+::-ms-input-placeholder {
+    color: #8088A8;
+}
+
+/* flex布局 */
+.mim-flex-wrap {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+
+.mim-flex-wrap-left {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: -webkit-box;
+    display: flex;
+    -webkit-justify-content: flex-start;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.mim-flex-wrap-right {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: -webkit-box;
+    display: flex;
+    -webkit-justify-content: flex-end;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.mim-flex-wrap-space-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mim-flex-vertical {
+    -webkit-box-orient: vertical;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    -webkit-flex-flow: column;
+    flex-direction: column;
+    flex-flow: column;
+}
+
+/*珊栏结构*/
+.mim-row {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: -webkit-box;
+    display: flex;
+    width: 100%;
+    position: relative;
+    box-sizing: border-box;
+    zoom: 1;
+}
+
+.mim-row:before, .mim-row:after {
+    display: table;
+    content: "";
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.mim-col-xs-1, .mim-col-xs-2, .mim-col-xs-3, .mim-col-xs-4, .mim-col-xs-5, .mim-col-xs-6, .mim-col-xs-7, .mim-col-xs-8, .mim-col-xs-9, .mim-col-xs-10, .mim-col-xs-11, .mim-col-xs-12 {
+    float: left;
+    box-sizing: border-box;
+    min-height: 24px;
+}
+
+.mim-col-xs-12 {
+    width: 100%;
+    position: relative;
+}
+
+.mim-col-xs-11 {
+    width: 91.66666667%;
+}
+
+.mim-col-xs-10 {
+    width: 83.33333333%;
+}
+
+.mim-col-xs-9 {
+    width: 75%;
+}
+
+.mim-col-xs-8 {
+    width: 66.66666667%;
+}
+
+.mim-col-xs-7 {
+    width: 58.33333333%;
+}
+
+.mim-col-xs-6 {
+    width: 50%;
+}
+
+.mim-col-xs-5 {
+    width: 41.66666667%;
+}
+
+.mim-col-xs-4 {
+    width: 33.33333333%;
+}
+
+.mim-col-xs-3 {
+    width: 25%;
+}
+
+.mim-col-xs-2 {
+    width: 16.66666667%;
+}
+
+.mim-col-xs-1 {
+    width: 8.33333333%;
+}
+
+.mim-col-5 {
+    width: 20%;
+}
+
+/*圆角*/
+.mim-borderRadius-4 {
+    border-radius: 4px;
+}
+
+.mim-borderRadius-6 {
+    border-radius: 6px;
+}
+
+.mim-borderRadius-8 {
+    border-radius: 8px;
+}
+
+.mim-borderRadius-10 {
+    border-radius: 10px;
+}
+
+.mim-borderRadius-12 {
+    border-radius: 12px;
+}
+
+.mim-borderRadius-30 {
+    border-radius: 30px;
+}
+
+/*主体头部*/
+.mim-header {
+    background: #ffffff;
+    margin: 0 12px 12px 12px;
+    padding: 12px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.mim-header:after, .mim-header:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    left: -12px;
+    right: -12px;
+    top: 0;
+    height: 36px;
+    background: #FF4444; /*主题色*/
+}
+
+/*主体banner图*/
+.mim-banner {
+    margin: 12px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+/*主体结构*/
+.mim-cont {
+    position: relative;
+    background: #ffffff;
+    margin: 12px;
+    padding: 12px;
+    box-sizing: border-box;
+}
+
+/*主体尾部及按钮*/
+.mim-foot {
+    width: 100%;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    padding: 12px;
+    background-color: #f7f7f7;
+    z-index: 9;
+    box-sizing: border-box;
+}
+
+.mim-foot-btn {
+    height: 44px;
+    text-align: center;
+    color: #ffffff;
+    line-height: 44px;
+    position: relative;
+}
+
+.mim-foot-p {
+    color: #ffffff;
+    position: absolute;
+    left: 24px;
+    top: 24px;
+    z-index: 10;
+}
+
+/*组件化(标题栏)*/
+.mim-cont .mim-cont-header {
+    border-bottom: 1px solid #f7f7f7;
+    padding-bottom: 12px;
+}
+
+.mim-cont .mim-cont-header h2 {
+    width: 80%;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 20px;
+    opacity: 1;
+}
+
+.mim-cont .mim-cont-header p {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    opacity: 1;
+    color: #8088A8;
+    margin-right: 4px;
+}
+
+/*组件化(功能列表)*/
+.function-list {
+    position: relative;
+    background: #ffffff;
+    margin: 12px;
+    padding: 0 12px;
+    box-sizing: border-box;
+}
+
+.function-list .storm {
+    padding: 14px 0;
+    width: 100%;
+    position: relative;
+}
+
+.function-list .storm-div {
+    width: 100%;
+}
+
+.function-list .storm-div:after, .function-list .storm-div:before {
+    content: '';
+    position: absolute;
+    width: 90%;
+    height: 1px;
+    background: #F7F7F7;
+    bottom: 0;
+}
+
+.function-list .storm:last-child .storm-div:after, .function-list .storm:last-child .storm-div:before {
+    content: '';
+    position: absolute;
+    width: 85%;
+    height: 1px;
+    background: transparent;
+    bottom: 0;
+}
+
+.function-list .storm p {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    opacity: 1;
+    color: #8088A8;
+}
+
+.function-list .storm .storm-name {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    opacity: 1;
+    color: #333C4F;
+}
+
+/*组件化(支付列表)*/
+.payment-list {
+    position: relative;
+    background: #ffffff;
+    margin: 12px;
+    padding: 0 12px;
+    box-sizing: border-box;
+}
+
+.payment-list .storm {
+    padding: 14px 0;
+    width: 100%;
+    position: relative;
+}
+
+.payment-list .storm-div {
+    width: 100%;
+}
+
+.payment-list .storm p {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    opacity: 1;
+    color: #8088A8;
+}
+
+.payment-list .storm .storm-name {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    opacity: 1;
+    color: #333C4F;
+}
+
+/*组件化(信息列表)*/
+.message-list-crosswise {
+    position: relative;
+    background: #ffffff;
+    margin: 12px;
+    padding: 0 32px 0 12px;
+    box-sizing: border-box;
+}
+
+.message-list-crosswise .storm {
+    width: 100%;
+    position: relative;
+    padding: 14px 0;
+}
+
+.message-list-crosswise .storm:after, .message-list-crosswise .storm:before {
+    content: '';
+    position: absolute;
+    width: calc(100% + 20px);
+    height: 1px;
+    background: #F7F7F7;
+    bottom: 0;
+}
+
+.message-list-crosswise .storm:last-child:after, .message-list-crosswise .storm:last-child:before {
+    content: '';
+    position: absolute;
+    width: calc(100% + 20px);
+    height: 1px;
+    background: transparent;
+    bottom: 0;
+}
+
+.message-list-crosswise .storm img {
+    position: absolute;
+    right: -20px;
+}
+
+.mim-crosswise-input {
+    background-color: transparent;
+    text-align: right;
+    width: 65%;
+}
+
+/*组件化(信息列表纵向)*/
+.message-list-lengthWays {
+    position: relative;
+    background: #ffffff;
+    margin: 12px;
+    padding: 0 12px;
+    box-sizing: border-box;
+}
+
+.message-list-lengthWays .storm {
+    width: 100%;
+    position: relative;
+    padding: 12px 0;
+    border-bottom: 1px solid #F7F7F7;
+}
+
+.message-list-lengthWays .storm:last-child {
+    border-bottom: none;
+}
+
+.message-list-lengthWays .storm label {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    opacity: 1;
+    color: #8088A8;
+    margin-bottom: 4px;
+    display: block;
+}
+
+.mim-lengthWays-input {
+    background-color: transparent;
+    text-align: left;
+    width: 100%;
+}
+
+.mim-lengthWays-input::-webkit-input-placeholder {
+    color: #333C4F;
+}
+
+.mim-lengthWays-input:-moz-placeholder {
+    color: #333C4F;
+}
+
+.mim-lengthWays-input::-moz-placeholder {
+    color: #333C4F;
+}
+
+.mim-lengthWays-input:-ms-input-placeholder {
+    color: #333C4F;
+}
+
+/*弹框*/
+.pop-up-div {
+    position: fixed;
+    z-index: 99;
+    width: 100%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, .5);
+}
+
+.pop-up {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% - 24px);
+    height: 200px;
+    overflow: auto;
+    padding: 12px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.pop-up h2 {
+    height: 25px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333C4F;
+    line-height: 25px;
+    margin-top: 12px;
+    text-align: center;
+}
+
+.pop-up p {
+    height: 20px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #333C4F;
+    line-height: 20px;
+    text-align: center;
+    margin-top: 8px;
+}
+
+.pop-operation-div div {
+    width: calc(50% - 6px);
+    text-align: center;
+}
+
+.pop-operation-div {
+    position: absolute;
+    bottom: 12px;
+    width: calc(100% - 24px);
+}
+
+.pop-operation-div .cancelBtn {
+    height: 44px;
+    background: #E7EAF1;
+    border-radius: 8px;
+    line-height: 44px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #8088A8;
+}
+
+.pop-operation-div .confirmBtn {
+    height: 44px;
+    border-radius: 8px;
+    line-height: 44px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+/*加载*/
+.loadingToast {
+    position: fixed;
+    z-index: 110;
+    width: 100%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: transparent;
+}
+
+.loadingToast-div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 120px;
+    background: hsla(0, 0%, 7%, .7);
+    text-align: center;
+    border-radius: 8px;
+}
+
+.loadingToast-img {
+    width: 48px;
+    height: 48px;
+    margin-top: 24px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    display: inline-block;
+    animation: UIloading 1s linear infinite;
+}
+
+@keyframes UIloading {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.loadingToast-p {
+    height: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff;
+    line-height: 20px;
+    text-align: center;
+    margin-top: 8px;
+}
+
+/*提示*/
+.mim-toast-show {
+    max-width: 140px;
+    border-radius: 6px;
+    padding: 8px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #FFFFFF;
+    line-height: 18px;
+    background: #000000;
+    position: fixed;
+    z-index: 100;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+/*暂无数据*/
+.mim-not-data {
+    width: 36%;
+    margin: 32% auto 0;
+    /*display: none;*/
+}
+
+.mim-not-data img {
+    width: 100%;
+    margin: auto;
+    height: auto;
+    display: inline-block;
+}
+
+.mim-not-data .no_dataText {
+    text-align: center;
+    font-size: 12px;
+    color: #979797;
+}
+
+/*列表弹框*/
+.mim-modal {
+    position: fixed;
+    z-index: 1000;
+    width: 100%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, .5);
+    display: none;
+}
+
+.mim-modal-div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-height: 80%;
+    overflow: auto;
+    padding: 0 12px;
+    background: #fff;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.mim-modal-div .mim-modal-header {
+    font-size: 14px;
+    padding: 12px;
+    font-weight: bold;
+    border-bottom: 1px solid #F7F7F7;
+}
+
+.mim-modal-div .mim-modal-search {
+    margin: 12px 0;
+    height: 30px;
+    background: #F5F6F7;
+    border-radius: 15px;
+    padding: 0 12px;
+}
+
+.mim-modal-div .mim-search-message {
+    font-size: 12px;
+    font-weight: 400;
+    color: #8088A8;
+    line-height: 30px;
+    padding: 0 12px;
+}
+
+.mim-modal-div .mim-modal-list .modal-storm {
+    padding: 12px;
+    border-top: 1px solid #F7F7F7;
+}
+
+.mim-modal-div .modal-noteData {
+    font-size: 14px;
+    font-weight: 400;
+    color: #8088A8;
+    text-align: center;
+    padding: 24px;
+    display: none;
+}
+
+.mim-modal-div .modal-clear-data {
+    display: none;
+}
+
+
+/*时间选择器*/
+.mim-select-date .mim-start-time, .mim-select-date .mim-end-time {
+    height: 26px;
+    border-radius: 2px;
+    border: 1px solid #EBEDF0;
+    padding: 0 5px;
+}
+
+.mim-select-date .mim-end-time {
+    margin-left: 6px;
+    margin-right: 6px;
+}
+
+.mim-select-date input, .mim-end-date input {
+    background: transparent;
+}
+
+.mim-select-date input::-webkit-input-placeholder, .mim-end-date input::-webkit-input-placeholder {
+    color: #333C4F;
+}
+
+.mim-select-date input:-moz-placeholder, .mim-end-date input:-moz-placeholder {
+    color: #333C4F;
+}
+
+.mim-select-date input::-moz-placeholder, .mim-end-date input::-moz-placeholder {
+    color: #333C4F;
+}
+
+.mim-select-date input:-ms-input-placeholder, .mim-end-date input:-ms-input-placeholder {
+    color: #333C4F;
+}
+
+/*计算组件*/
+.mim-count-module {
+    position: absolute;
+}
+
+.mim-count-module .subtract-num, .mim-count-module .add-num {
+    width: 24px;
+    height: 24px;
+    text-align: center;
+    line-height: 24px;
+}
+
+.mim-count-module .subtract-num img, .mim-count-module .add-num img {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    margin-top: 5px;
+}
+
+.mim-count-module .mim-count-number {
+    height: 16px;
+    line-height: 16px;
+    width: 40px;
+    background: #F5F5F5;
+    border-radius: 2px;
+    text-align: center;
+    font-weight: bold;
+}

@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="yes" name="apple-touch-fullscreen">
+    <meta content="telephone=no,email=no" name="format-detection">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <title>人脸识别</title>
+    <!--    <link rel="stylesheet" href="/public/wechat2/css/mim-common-h5.css" type="text/css">-->
+    <link rel="stylesheet" href="./mim-common-h5.css" type="text/css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .video-wrapper {
+            width: 100%;
+            position: relative;
+            height: 100vh;
+        }
+
+        .wrapper {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            background-color: #000000;
+        }
+
+        #video {
+            position: absolute;
+            object-fit: cover;
+            z-index: 10;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            transform: translate(-50%, -50%) rotateY(180deg);
+            top: 50%;
+            left: 50%;
+            margin-top: -40px;
+        }
+
+        .img-wrapper {
+            position: absolute;
+            width: 290px;
+            height: 290px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9;
+            margin-top: -40px;
+        }
+
+        .cont {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            top: 50%;
+            left: 50%;
+            width: 216px;
+            text-align: center;
+            margin-top: 165px;
+        }
+
+        .mim-font-18 {
+            font-size: 18px;
+            font-weight: 400;
+            color: #FFFFFF;
+            line-height: 25px;
+            height: 50px;
+        }
+
+        .mim-font-12 {
+            font-size: 12px;
+            font-weight: 400;
+            color: #FFFFFF;
+            line-height: 17px;
+            margin-top: 15px;
+        }
+
+        #unidentifiable {
+            position: fixed;
+            width: 100px;
+            height: 30px;
+            background: #FFFFFF;
+            border-radius: 15px;
+            text-align: center;
+            transform: translateX(-50%);
+            left: 50%;
+            bottom: 55px;
+            font-size: 12px;
+            font-weight: 400;
+            color: #000000;
+            line-height: 30px;
+            display: none;
+        }
+
+        .rect {
+            border: 2px solid #a64ceb;
+            left: -1000px;
+            position: absolute;
+            top: -1000px;
+            z-index: 1100;
+            /*display: none;*/
+        }
+    </style>
+</head>
+<body>
+<div class="video-wrapper">
+    <div class="wrapper">
+        <button id="capture" style="display: none;"></button>
+        <canvas id="canvas" width="320" height="480"></canvas>
+        <img class="img-wrapper" id="imgWrap" src="./face-wrapper.png" alt=""/>
+        <div class="cont">
+            <p class="mim-font-18" id="tip">正在检测人脸中...</p>
+            <p class="mim-font-12" id="hint">请正对手机并将人脸移入框内<br>保持光线充足</p>
+        </div>
+        <div id="unidentifiable">开始人脸识别</div>
+    </div>
+    <!-- video用于显示媒体设备的视频流，自动播放 -->
+    <video id="video" src="" autoplay preload loop muted
+           playsinline x5-video-player-type="h5"
+           x5-video-player-fullscreen="true" webkit-playsinline="true"></video>
+
+</div>
+
+<!--<script type="text/javascript" src="/public/wechat2/js/jquery-3.3.1.min.js"></script>-->
+<!--<script type="text/javascript" src="/public/wechat2/js/mim-common-h5.js"></script>-->
+<script src="./jquery-3.3.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/eduardolundgren/tracking.js/build/tracking-min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/eduardolundgren/tracking.js/build/data/face-min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/eduardolundgren/tracking.js/build/data/eye-min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/eduardolundgren/tracking.js/build/data/mouth-min.js"></script>
+<script src="./mim-common-h5.js"></script>
+<script>
+    window.onload = function () {
+        var idKey = '<{$id_key}>';
+        var typePage = '<{$type}>';
+        var order_id = '<{$order_id}>';
+        var id = '<{$id}>';
+        var systemType = "";
+        var video = document.getElementById("video");
+        var tip = document.getElementById('tip');
+        var hint = document.getElementById('hint');
+        var unidentifiable = document.getElementById('unidentifiable');
+        var capture = document.getElementById('capture');
+        var canvas = document.getElementById("canvas");
+        var context = canvas.getContext("2d");
+
+        if (navigator.mediaDevices.getUserMedia
+            || navigator.getUserMedia
+            || navigator.webkitGetUserMedia
+            || navigator.mozGetUserMedia
+        ) {
+            //调用用户媒体设备，访问摄像头
+            getUserMedia({
+                video: {
+                    width: {min: 960, ideal: 1280, max: 1920},
+                    height: {min: 540, ideal: 720, max: 1080},
+                    facingMode: "user", // 前置优先
+                }
+            }, success, error);
+        } else {
+            alert("你的浏览器不支持访问用户媒体设备");
+        }
+
+        // 访问用户媒体设备的兼容方法
+        function getUserMedia(constrains, success, error) {
+            if (navigator.mediaDevices.getUserMedia) {
+                //最新标准API
+                navigator.mediaDevices.getUserMedia(constrains).then(success).catch(error);
+            } else if (navigator.webkitGetUserMedia) {
+                //webkit内核浏览器
+                navigator.webkitGetUserMedia(constrains).then(success).catch(error);
+            } else if (navigator.mozGetUserMedia) {
+                //Firefox浏览器
+                navigator.mozGetUserMedia(constrains).then(success).catch(error);
+            } else if (navigator.getUserMedia) {
+                //旧版API
+                navigator.getUserMedia(constrains).then(success).catch(error);
+            }
+        }
+
+        // 成功的回调函数
+        function success(stream) {
+            streamIns = stream
+            //兼容webkit内核浏览器
+            var CompatibleURL = window.URL || window.webkitURL;
+            //将视频流设置为video元素的源
+            try {
+                video.src = CompatibleURL.createObjectURL(stream);
+            } catch (e) {
+                // throw new Error(e);
+                video.srcObject = stream;
+            }
+            // 播放视频
+            video.play().then(() => {
+
+            }).catch((err) => {
+                tip.innerText = "该机型暂不支持自动识别！";
+                hint.innerText = "请点击下方按钮手动打开识别\n即可使用";
+                unidentifiable.style.display = "block";
+                unidentifiable.addEventListener("click", function () {
+                    video.play();
+                    executeFn();
+                })
+            });
+        }
+
+
+        // 异常的回调函数
+        function error() {
+            tip.innerText = "该机型暂不支持自动识别！";
+            hint.innerText = "请点击下方按钮手动打开识别\n即可使用";
+        }
+
+
+        // 判断是否拍照
+        var flag = 0
+        var tipFlag = 0
+        // 视频流实例
+        var streamIns = null;
+
+        //新建一个tracker实例
+        executeFn()
+
+        function executeFn() {
+            tip.innerText = "正在检测人脸中...";
+            hint.innerText = "请正对手机并将人脸移入框内\n保持光线充足";
+            // tracker = new tracking.ObjectTracker(['face']); // 可选 face, eye, mouth, 需要引入相应的js
+            var tracker = new tracking.ObjectTracker(['face', 'eye', 'mouth']);
+            // 设置步长
+            tracker.setStepSize(1.7);
+            // 绑定监听方法
+            tracker.on('track', handleTracked);
+            // 开始追踪
+            tracking.track('#video', tracker);
+
+
+            // 处理追踪事件
+            function handleTracked(event) {
+                if (event.data.length === 0) {
+                    // 没有检测到
+                    console.log('没有检测到人脸');
+                } else {
+                    // 提示用户已经检测到人脸
+                    if (!tipFlag) {
+                        tip.innerText = '检测人脸成功，正在拍照，请保持不动2秒！';
+                        removeTracker()
+                    }
+                    // 1秒后拍照，仅拍一次
+                    if (!flag) {
+                        flag = 1;
+                        setTimeout(() => {
+                            // 模拟btn点击事件
+                            capture.click();
+                            tip.innerText = '拍照完成！';
+                            tipFlag = 1
+                            closeStream();
+                            loadShow();
+                            uploadingFn(canvas)
+                        }, 1000);
+                    }
+                    // 人脸数据点阵处理
+                    event.data.forEach(window.plot)
+                }
+            }
+
+            // 绘制追踪框
+            window.plot = function ({x, y, width: w, height: h}) {
+                // 创建框对象
+                var rect = document.createElement('div');
+                document.querySelector('.video-wrapper').appendChild(rect);
+                rect.classList.add('rect');
+                rect.style.width = w + 'px';
+                rect.style.height = h + 'px';
+                rect.style.left = (video.offsetLeft + x) + 'px';
+                rect.style.top = (video.offsetTop + y) + 'px';
+            };
+
+            // 移除监听事件
+            function removeTracker() {
+                tracker.removeListener('track', handleTracked);
+            }
+
+            //数据加载中
+            function loadShow() {
+                $("body").append($("<div class=\"loadingToast\">\n" +
+                    "    <div class=\"loadingToast-div\">\n" +
+                    "        <img alt='数据加载中' src=" + LoadingSrc + " class=\"loadingToast-img\"/>\n" +
+                    "        <p class=\"loadingToast-p\">照片上传中</p>\n" +
+                    "    </div>\n" +
+                    "</div>"))
+            }
+
+            // 关闭摄像
+            function closeStream() {
+                try {
+                    streamIns.enabled = false;
+                    streamIns.getTracks()[0].stop();
+                    streamIns.getVideoTracks()[0].stop();
+                } catch (e) {
+                    throw new Error(e);
+                }
+            }
+
+            // 注册拍照按钮的单击事件
+            document.getElementById("capture").addEventListener("click", function () {
+                //绘制画面
+                context.drawImage(video, 0, 0, 320, 480);
+                // 保持图片为base64格式
+                var imgUrl = saveAsPNG(canvas);
+                // 显示图片
+                // imgView.appendChild(convertCanvasToImage(canvas));
+            });
+
+            // 保存成png格式的图片
+            function saveAsPNG(canvas) {
+                return canvas.toDataURL("image/png");
+            }
+
+            // canvas to Image
+            function convertCanvasToImage(canvas) {
+                var image = new Image();
+                image.src = canvas.toDataURL("image/png");
+                return image;
+            }
+
+        }
+
+        function uploadingFn(canvas) {
+            var imgUrl = saveAsPNG(canvas);
+            console.log(imgUrl);
+            if (typePage === "1") {
+                plumAjax('/wechat2/request/ajaxLetUsGo', {
+                    map: 'api_user_img_upload',
+                    image_type: '5',
+                    image: imgUrl,
+                }, function (ret) {
+                    var faceImg = ret.data.url;
+                    var living_cache_no = ret.data.cache_no;
+                    var em = ret.em;
+                    sessionStorage.setItem("faceImg", faceImg);
+                    sessionStorage.setItem("living_cache_no", living_cache_no);
+                    sessionStorage.setItem("em", em);
+                    window.location.href = "/wechat2/user/realAuthTwo?id_key=" + idKey
+                }, function () {
+                    loadHide();
+                });
+            } else if (typePage === "2") {
+                plumAjax('/wechat2/request/ajaxLetUsGo', {
+                    map: 'api_user_img_upload',
+                    image_type: '12',
+                    image: imgUrl,
+                    order_id: order_id,
+                }, function (ret) {
+                    if (ret.ec === 200) {
+                        //三方创建订单
+                        // clearTimeout(setFaceTime);
+                        timeStop = "2";
+                        // alert("图片上传成功")
+                        plumAjax('/wechat2/request/ajaxLetUsGo', {
+                            map: 'api_pay_order_quick',
+                            order_id: order_id,
+                            latitude: lat,
+                            longitude: lag,
+                            id: id,
+                            id_key: idKey,
+                        }, function (ret) {
+                            if (ret.ec === 200) {
+                                // alert("三方成功")
+                                window.location.href = "/wechat2/user/successFaceDetect?id_key=" + idKey + '&type=2';
+                            } else {
+                                // alert("三方失败")
+                                localStorage.setItem("errMessage", ret.em);
+                                window.location.href = "/wechat2/user/successFaceDetect?id_key=" + idKey + '&type=1';
+                                // window.location.href = "/wechat2/user/errorFaceDetect?id_key=" + idKey + '&order_id=' + order_id + '&id=' + id + '&type=2';
+                            }
+                        }, function () {
+                            loadHide();
+                        });
+                    } else {
+                        // alert("图片上传失败")
+                        localStorage.setItem("errMessage", ret.em);
+                        window.location.href = "/wechat2/user/errorFaceDetect?id_key=" + idKey + '&order_id=' + order_id + '&id=' + id + '&type=2';
+                    }
+
+                }, function () {
+                    // loadHide();
+                });
+            }
+        }
+
+
+    };
+
+
+</script>
+</body>
+</html>
